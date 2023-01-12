@@ -53,9 +53,11 @@ class _SplashScreenState extends State<SplashScreen> {
             Text(
               AppStrings.splashtext,
               style: TextStyle(
-                  color: ColorManager.primary,
-                  fontSize: MediaQuery.of(context).size.height * 0.03,
-                  fontWeight: FontWeightManager.bold),
+                color: ColorManager.primary,
+                fontSize: MediaQuery.of(context).size.height * 0.03,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w700,
+              ),
             )
           ],
         ),

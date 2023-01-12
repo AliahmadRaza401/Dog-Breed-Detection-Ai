@@ -5,6 +5,7 @@ import 'package:dog_breed_detection/resources/routesmanager.dart';
 import 'package:dog_breed_detection/resources/stringmanager.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
+import '../ads_services/ads_services.dart';
 import '../resources/assets.dart';
 import 'widgets/card.dart';
 
@@ -26,24 +27,30 @@ class _HomeState extends State<Home> {
         fit: StackFit.expand,
         children: [
           generateBluredImage(),
-          SizedBox(
-            height: double.infinity,
-            width: double.infinity,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppStrings.detect,
-                    style: TextStyle(
-                      color: ColorManager.white,
-                      fontSize: 40.0,
+          SafeArea(
+            child: SizedBox(
+              height: double.infinity,
+              width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AdsServices.displayBannerAd(),
+                    Text(
+                      AppStrings.detect,
+                      style: TextStyle(
+                        color: ColorManager.white,
+                        fontSize: 40.0,
+                        fontFamily: 'Gotham',
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
-                  ),
-                  rectShapeContainer()
-                ],
+                    rectShapeContainer(),
+                    AdsServices.displayBannerAd(),
+                  ],
+                ),
               ),
             ),
           ),
@@ -100,30 +107,43 @@ class _HomeState extends State<Home> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                AppStrings.about,
-                textAlign: TextAlign.justify,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: FontSize.s20,
-                ),
-              ),
-            ),
+            // const Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 8.0),
+            //   child: Text(
+            //     AppStrings.about,
+            //     textAlign: TextAlign.justify,
+            //     style: TextStyle(
+            //       color: Colors.white,
+            //       fontSize: FontSize.s20,
+            //       fontFamily: 'SourceSansPro',
+
+            //       // fontWeight: FontWeight.w700,
+            //     ),
+            //   ),
+            // ),
             carouselSlider(),
             const SizedBox(
               height: 20,
             ),
-            const HomeCard(
+            HomeCard(
               name: AppStrings.camera,
               route: Routes.main,
+              icon: Icon(
+                Icons.image_search_sharp,
+                color: ColorManager.primary,
+                size: 30,
+              ),
             ),
-            const HomeCard(
+            HomeCard(
               name: AppStrings.live,
               route: Routes.live,
+              icon: Icon(
+                Icons.linked_camera_rounded,
+                color: ColorManager.primary,
+                size: 30,
+              ),
             ),
           ],
         ),
@@ -143,7 +163,7 @@ class _HomeState extends State<Home> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                   image: const DecorationImage(
-                    image: AssetImage(ImageAssets.blackdog),
+                    image: AssetImage('assets/images/1.jpg'),
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -152,7 +172,7 @@ class _HomeState extends State<Home> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                   image: const DecorationImage(
-                    image: AssetImage(ImageAssets.bull),
+                    image: AssetImage('assets/images/2.jpg'),
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -161,7 +181,35 @@ class _HomeState extends State<Home> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                   image: const DecorationImage(
-                    image: AssetImage(ImageAssets.dog1),
+                    image: AssetImage('assets/images/3.jpg'),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  image: const DecorationImage(
+                    image: AssetImage('assets/images/4.jpg'),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              AdsServices.displayNativeMRECAd(),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  image: const DecorationImage(
+                    image: AssetImage('assets/images/5.jpg'),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  image: const DecorationImage(
+                    image: AssetImage('assets/images/6.jpg'),
                     fit: BoxFit.contain,
                   ),
                 ),

@@ -8,10 +8,12 @@ import '../../resources/fontsmanager.dart';
 class HomeCard extends StatelessWidget {
   final String name;
   final String route;
+  final Widget icon;
   const HomeCard({
     Key? key,
     required this.name,
     required this.route,
+    required this.icon,
   }) : super(key: key);
 
   @override
@@ -20,7 +22,9 @@ class HomeCard extends StatelessWidget {
       elevation: 8.0,
       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
       child: Container(
-        decoration: BoxDecoration(color: ColorManager.white.withOpacity(0.7)),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: ColorManager.white.withOpacity(0.7)),
         child: ListTile(
           selectedColor: ColorManager.primary,
           onTap: (() {
@@ -30,9 +34,13 @@ class HomeCard extends StatelessWidget {
           title: Text(
             name,
             style: const TextStyle(
-                fontSize: FontSize.s18, fontWeight: FontWeightManager.medium),
+              fontSize: FontSize.s18,
+              fontWeight: FontWeight.w700,
+              fontFamily: 'Gotham',
+            ),
           ),
-          leading: Image.asset(ImageAssets.stackimage),
+          leading: icon,
+          //  Image.asset(ImageAssets.stackimage),
           trailing: Container(
               alignment: Alignment.centerRight,
               width: MediaQuery.of(context).size.width * 0.11,

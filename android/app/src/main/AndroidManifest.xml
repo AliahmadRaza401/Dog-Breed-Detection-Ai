@@ -30,5 +30,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data android:name="applovin.sdk.key"
+           android:value="2MUk_Fq0UafQGZkmSOKcfnpy67su3ddUd6I7o77CPGESea05sQvHJKUgu3BbW9QcUp6GPRowXANMXeeT4So_Jd"/>
     </application>
 </manifest>

@@ -65,7 +65,10 @@ class ImageNotifier extends ChangeNotifier {
       print("live");
       print('recog  ${recognitions!.length}');
       for (var response in recognitions) {
-        liveresult = "${liveresult! + response["label"]}\n";
+        liveresult = "${liveresult! + response["label"]}";
+        print('response: ${response}');
+        print(
+            'liveresult_______________________________________________________________________: ${liveresult}');
       }
       isWorking = false;
     }
@@ -82,7 +85,7 @@ class ImageNotifier extends ChangeNotifier {
       asynch: true,
     );
     result = '';
-
+    print('output: ${output}');
     print("detected output is ${output![0]['label']}");
 
     result = output[0]['label'];
@@ -114,7 +117,6 @@ class ImageNotifier extends ChangeNotifier {
                     image: AssetImage(
                       ImageAssets.bottom,
                     ))),
-                    
             child: Container(
                 decoration: BoxDecoration(
                   color: ColorManager.white.withOpacity(0.3),

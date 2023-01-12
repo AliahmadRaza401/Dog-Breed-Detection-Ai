@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:dog_breed_detection/ads_services/ads_services.dart';
 import 'package:dog_breed_detection/resources/routesmanager.dart';
 import 'package:dog_breed_detection/resources/theme_manager.dart';
 import 'package:dog_breed_detection/screens/splash_screen.dart';
@@ -10,6 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
   WidgetsFlutterBinding.ensureInitialized();
+  AdsServices.adsInitialize();
   runApp(const ProviderScope(child: MyApp()));
 }
 

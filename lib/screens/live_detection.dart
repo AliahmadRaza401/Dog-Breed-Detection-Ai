@@ -1,10 +1,12 @@
 import 'package:camera/camera.dart';
+import 'package:dog_breed_detection/ads_services/ads_services.dart';
 import 'package:dog_breed_detection/resources/colormanager.dart';
 import 'package:dog_breed_detection/resources/fontsmanager.dart';
 import 'package:dog_breed_detection/riverpod/detection_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../main.dart';
 import '../resources/sizeconfig.dart';
@@ -102,6 +104,17 @@ class _CommunicationState extends ConsumerState<Communication> {
     super.dispose();
   }
 
+  nameDisplay(val) {
+    if (val == null) {
+      return "Nothing to Scan";
+    } else if (val == '') {
+      return "Scanning      ";
+    } else {
+      String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
+      return capitalize(val);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -129,6 +142,7 @@ class _CommunicationState extends ConsumerState<Communication> {
                     child: GestureDetector(
                       onTap: () {
                         Navigator.pop(context);
+                        AdsServices.displayInterstitialAds();
                       },
                       child: Container(
                           alignment: Alignment.centerRight,
@@ -152,22 +166,79 @@ class _CommunicationState extends ConsumerState<Communication> {
                     left: 0,
                     right: 0,
                     child: Center(
-                      child: Container(
-                          alignment: Alignment.center,
-                          width: MediaQuery.of(context).size.width * 0.7,
-                          height: MediaQuery.of(context).size.height * 0.08,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: ColorManager.primary.withOpacity(0.6)),
-                          child: Text(
-                            ref.watch(notifierProvider).liveresult ??
-                                'Nothing to be detected',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: ColorManager.white,
-                                fontSize: FontSize.s17,
-                                fontWeight: FontWeightManager.bold),
-                          )),
+                      child: nameDisplay(
+                                      ref.watch(notifierProvider).liveresult) !=
+                                  "Scanning      " &&
+                              nameDisplay(
+                                      ref.watch(notifierProvider).liveresult) !=
+                                  "Nothing to Scan"
+                          ? Container(
+                              alignment: Alignment.center,
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              // height: MediaQuery.of(context).size.height * 0.08,
+                              padding: EdgeInsets.symmetric(
+                                vertical:
+                                    MediaQuery.of(context).size.height * 0.03,
+                                horizontal:
+                                    MediaQuery.of(context).size.width * 0.05,
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.green.withOpacity(0.6)),
+                              child: Text(
+                                nameDisplay(
+                                    ref.watch(notifierProvider).liveresult),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: ColorManager.white,
+                                    fontSize: FontSize.s24,
+                                    fontWeight: FontWeightManager.bold),
+                                overflow: TextOverflow.fade,
+                              ),
+                            )
+                          : Container(
+                              alignment: Alignment.center,
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              height: MediaQuery.of(context).size.height * 0.08,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: nameDisplay(ref
+                                              .watch(notifierProvider)
+                                              .liveresult) !=
+                                          "Nothing to Scan"
+                                      ? ColorManager.primary.withOpacity(0.6)
+                                      : Colors.yellow.withOpacity(0.8)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Wrap(
+                                    children: [
+                                      Text(
+                                        nameDisplay(ref
+                                            .watch(notifierProvider)
+                                            .liveresult),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: ColorManager.white,
+                                            fontSize: FontSize.s24,
+                                            fontWeight: FontWeightManager.bold),
+                                        overflow: TextOverflow.fade,
+                                      ),
+                                    ],
+                                  ),
+                                  nameDisplay(ref
+                                              .watch(notifierProvider)
+                                              .liveresult) !=
+                                          "Nothing to Scan"
+                                      ? LoadingAnimationWidget
+                                          .staggeredDotsWave(
+                                          color: Colors.white,
+                                          size: FontSize.s24,
+                                        )
+                                      : SizedBox(),
+                                ],
+                              ),
+                            ),
                     ),
                   ), //Container
                   //Container
