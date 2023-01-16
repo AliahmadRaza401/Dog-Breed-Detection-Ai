@@ -1,9 +1,11 @@
 import 'package:camera/camera.dart';
+import 'package:dog_breed_detection/ads_services/ads_services.dart';
 import 'package:dog_breed_detection/resources/colormanager.dart';
 import 'package:dog_breed_detection/resources/sizeconfig.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lottie/lottie.dart';
 
 import '../main.dart';
 import '../riverpod/detection_provider.dart';
@@ -91,159 +93,178 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Scaffold(
-      body: SafeArea(
-          child: Column(
-        children: [
-          Expanded(
-            child: FutureBuilder(
-                future: _initializeControllerFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    // If the Future is complete, display the preview.
-                    return Stack(
-                      children: <Widget>[
-                        LayoutBuilder(
-                          builder: (context, constraints) {
-                            return SizedBox(
-                              width: constraints.maxWidth,
-                              height: constraints.maxHeight,
-                              child: CameraPreview(controller!),
-                            );
-                          },
-                        ),
-                        Positioned(
-                          top: 10,
-                          left: 15,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
+    return WillPopScope(
+     onWillPop: () async {
+       AdsServices.displayInterstitialAds();
+        return false;
+      },
+      child: Scaffold(
+        body: SafeArea(
+            child: Column(
+          children: [
+            Expanded(
+              child: FutureBuilder(
+                  future: _initializeControllerFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      // If the Future is complete, display the preview.
+                      return Stack(
+                        children: <Widget>[
+                          LayoutBuilder(
+                            builder: (context, constraints) {
+                              return SizedBox(
+                                width: constraints.maxWidth,
+                                height: constraints.maxHeight,
+                                child: CameraPreview(controller!),
+                              );
                             },
-                            child: Container(
-                                alignment: Alignment.centerRight,
-                                width: MediaQuery.of(context).size.width * 0.11,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.07,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: ColorManager.white.withOpacity(0.3),
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.arrow_back_ios,
-                                    color: ColorManager.primary,
-                                  ),
-                                )),
                           ),
-                        ), //Container
-                        //Container
-                        Positioned(
-                            bottom: 100,
-                            left: 0,
-                            right: 0,
-                            child: Center(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  InkWell(
-                                    onTap: (() {
-                                      ref
-                                          .read(notifierProvider.notifier)
-                                          .getimagefromgallery(context)
-                                          .then((value) =>
-                                              print(value.toString()));
-                                    }),
+                          Positioned(
+                            top: 10,
+                            left: 15,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                                AdsServices.displayInterstitialAds();
+                              },
+                              child: Container(
+                                  alignment: Alignment.centerRight,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.11,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.07,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: ColorManager.white.withOpacity(0.3),
+                                  ),
+                                  child: Center(
                                     child: Icon(
-                                      size: getProportionateScreenHeight(30),
-                                      Icons.image_outlined,
+                                      Icons.arrow_back_ios,
                                       color: ColorManager.primary,
                                     ),
-                                  ),
-                                  InkWell(
-                                    onTap: (() async {
-                                      if (controller != null) {
-                                        if (controller!.value.isInitialized) {
-                                          ref
-                                              .watch(notifierProvider)
-                                              .getimagefromscreen(
-                                                  context, controller);
+                                  )),
+                            ),
+                          ), //Container
+                          //Container
+                          Positioned(
+                              bottom: 100,
+                              left: 0,
+                              right: 0,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    InkWell(
+                                      onTap: (() {
+                                        ref
+                                            .read(notifierProvider.notifier)
+                                            .getimagefromgallery(context)
+                                            .then((value) =>
+                                                print(value.toString()));
+                                      }),
+                                      child: Icon(
+                                        size: getProportionateScreenHeight(30),
+                                        Icons.image_outlined,
+                                        color: ColorManager.primary,
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: (() async {
+                                        if (controller != null) {
+                                          if (controller!.value.isInitialized) {
+                                            ref
+                                                .watch(notifierProvider)
+                                                .getimagefromscreen(
+                                                    context, controller);
+                                          }
                                         }
-                                      }
-                                    }),
-                                    child: Container(
-                                      height: getProportionateScreenHeight(100),
-                                      width: getProportionateScreenWidth(100),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                            color: ColorManager.primary),
+                                      }),
+                                      child: Container(
+                                        height:
+                                            getProportionateScreenHeight(100),
+                                        width: getProportionateScreenWidth(100),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                              color: ColorManager.primary),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            height:
+                                                getProportionateScreenHeight(
+                                                    60),
+                                            width:
+                                                getProportionateScreenWidth(60),
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: ColorManager.primary,
+                                            ),
+                                            child: Icon(
+                                              Icons.search,
+                                              size:
+                                                  getProportionateScreenHeight(
+                                                      40),
+                                              color: ColorManager.white,
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          height:
-                                              getProportionateScreenHeight(60),
-                                          width:
-                                              getProportionateScreenWidth(60),
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          _isCameraInitialized = false;
+                                        });
+                                        onNewCameraSelected(
+                                          cameras[
+                                              _isRearCameraSelected ? 1 : 0],
+                                        );
+                                        setState(() {
+                                          _isRearCameraSelected =
+                                              !_isRearCameraSelected;
+                                        });
+                                      },
+                                      child: Stack(
+                                        alignment: Alignment.center,
+                                        children: [
+                                          Icon(
+                                            _isRearCameraSelected
+                                                ? Icons.camera_front
+                                                : Icons.camera_rear,
                                             color: ColorManager.primary,
+                                            size: 30,
                                           ),
-                                          child: Icon(
-                                            Icons.search,
-                                            size: getProportionateScreenHeight(
-                                                40),
-                                            color: ColorManager.white,
-                                          ),
-                                        ),
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        _isCameraInitialized = false;
-                                      });
-                                      onNewCameraSelected(
-                                        cameras[_isRearCameraSelected ? 1 : 0],
-                                      );
-                                      setState(() {
-                                        _isRearCameraSelected =
-                                            !_isRearCameraSelected;
-                                      });
-                                    },
-                                    child: Stack(
-                                      alignment: Alignment.center,
-                                      children: [
-                                        Icon(
-                                          _isRearCameraSelected
-                                              ? Icons.camera_front
-                                              : Icons.camera_rear,
-                                          color: ColorManager.primary,
-                                          size: 30,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ))
-
-                        //Container
-                        //Container
-                      ], //<Widget>[]
-                    );
-                  } else {
-                    return const Center(
-                        child:
-                            CircularProgressIndicator()); // Otherwise, display a loading indicator.
-                  }
-                }),
-          ),
-        ],
-      )),
+                                  ],
+                                ),
+                              )),
+                          Center(
+                            child: Positioned(
+                              right: 0,
+                              left: 0,
+                              child: Lottie.asset(
+                                  'assets/images/circle_scanning.json'),
+                            ),
+                          ),
+                          //Container
+                          //Container
+                        ], //<Widget>[]
+                      );
+                    } else {
+                      return const Center(
+                          child:
+                              CircularProgressIndicator()); // Otherwise, display a loading indicator.
+                    }
+                  }),
+            ),
+          ],
+        )),
+      ),
     );
   }
 }

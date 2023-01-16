@@ -65,10 +65,7 @@ class ImageNotifier extends ChangeNotifier {
       print("live");
       print('recog  ${recognitions!.length}');
       for (var response in recognitions) {
-        liveresult = "${liveresult! + response["label"]}";
-        print('response: ${response}');
-        print(
-            'liveresult_______________________________________________________________________: ${liveresult}');
+        liveresult = "${liveresult! + response["label"]}\n";
       }
       isWorking = false;
     }
@@ -85,14 +82,17 @@ class ImageNotifier extends ChangeNotifier {
       asynch: true,
     );
     result = '';
-    print('output: ${output}');
-    print("detected output is ${output![0]['label']}");
-
-    result = output[0]['label'];
-    print("RESULT $result");
-    await showbottomsheet(context);
-    notifyListeners();
-    return output;
+    if (output.isEmpty) {
+      result = 'No breed found';
+      showbottomsheet(context);
+      // Show a message that the image could not be classified
+      return null;
+    } else {
+      result = output[0]['label'];
+      await showbottomsheet(context);
+      notifyListeners();
+      return output;
+    }
   }
 
   Future showbottomsheet(context) async {
