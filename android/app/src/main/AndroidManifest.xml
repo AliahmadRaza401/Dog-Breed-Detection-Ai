@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.dog_breed_detection">
+    package="com.dogapp.dogsimulator.dogbreed.puppyapp.newdogapp.animalapp.dogbreedscanner">
    <application
         android:label="Dog Breed Scanner"
         android:name="${applicationName}"

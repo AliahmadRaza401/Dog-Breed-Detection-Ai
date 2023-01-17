@@ -1,4 +1,4 @@
-package com.example.dog_breed_detection
+package com.dogapp.dogsimulator.dogbreed.puppyapp.newdogapp.animalapp.dogbreedscanner
 
 import io.flutter.embedding.android.FlutterActivity
 
