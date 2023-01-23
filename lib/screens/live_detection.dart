@@ -121,7 +121,7 @@ class _CommunicationState extends ConsumerState<Communication> {
     SizeConfig().init(context);
     return WillPopScope(
       onWillPop: () async {
-        AdsServices.displayInterstitialAds();
+        // AdsServices.displayInterstitialAds();
         return false;
       },
       child: Scaffold(
@@ -148,7 +148,7 @@ class _CommunicationState extends ConsumerState<Communication> {
                       child: GestureDetector(
                         onTap: () {
                           Navigator.pop(context);
-                          AdsServices.displayInterstitialAds();
+                          // AdsServices.displayInterstitialAds();
                         },
                         child: Container(
                             alignment: Alignment.centerRight,

@@ -24,10 +24,10 @@ if (flutterVersionName == null) {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-apply plugin: 'applovin-quality-service'
-applovin {
-       apiKey "A5XP_KT9NMQ1qsZ7qrTNaGwvFnclEmflb8rWXDutBEewZwxFdi6FJN3pB5vA5gw7TuJdc_wGNUeWHPozNR6LdC"
-}
+// apply plugin: 'applovin-quality-service'
+// applovin {
+//        apiKey "A5XP_KT9NMQ1qsZ7qrTNaGwvFnclEmflb8rWXDutBEewZwxFdi6FJN3pB5vA5gw7TuJdc_wGNUeWHPozNR6LdC"
+// }
 
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
@@ -83,7 +83,7 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.applovin:applovin-sdk:11.4.4'
-    implementation 'com.google.android.gms:play-services-location:20.0.0'
-    implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
+    // implementation 'com.applovin:applovin-sdk:11.4.4'
+    // implementation 'com.google.android.gms:play-services-location:20.0.0'
+    // implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
 }

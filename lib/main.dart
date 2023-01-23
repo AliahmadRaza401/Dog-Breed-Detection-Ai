@@ -11,7 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
   WidgetsFlutterBinding.ensureInitialized();
-  AdsServices.adsInitialize();
+  // AdsServices.adsInitialize();
   runApp(const ProviderScope(child: MyApp()));
 }
 

@@ -95,7 +95,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     SizeConfig().init(context);
     return WillPopScope(
      onWillPop: () async {
-       AdsServices.displayInterstitialAds();
+      //  AdsServices.displayInterstitialAds();
         return false;
       },
       child: Scaffold(
@@ -125,7 +125,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.pop(context);
-                                AdsServices.displayInterstitialAds();
+                                // AdsServices.displayInterstitialAds();
                               },
                               child: Container(
                                   alignment: Alignment.centerRight,

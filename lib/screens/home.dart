@@ -34,10 +34,10 @@ class _HomeState extends State<Home> {
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AdsServices.displayBannerAd(),
+                    // AdsServices.displayBannerAd(),
                     Text(
                       AppStrings.detect,
                       style: TextStyle(
@@ -47,8 +47,11 @@ class _HomeState extends State<Home> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
+                    // SizedBox(
+                    //   height: 20,
+                    // ),
                     rectShapeContainer(),
-                    AdsServices.displayBannerAd(),
+                    // AdsServices.displayBannerAd(),
                   ],
                 ),
               ),
@@ -81,6 +84,7 @@ class _HomeState extends State<Home> {
   Widget rectShapeContainer() {
     return Container(
       width: double.infinity,
+      // margin: EdgeInsets.only(top: 50),
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
@@ -195,7 +199,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-              AdsServices.displayNativeMRECAd(),
+              // AdsServices.displayNativeMRECAd(),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
