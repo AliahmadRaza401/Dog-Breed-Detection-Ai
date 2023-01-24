@@ -125,83 +125,99 @@ class _CommunicationState extends ConsumerState<Communication> {
         return false;
       },
       child: Scaffold(
-        body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: Stack(
-                  children: <Widget>[
-                    _isCameraInitialized
-                        ? LayoutBuilder(
-                            builder: (context, constraints) {
-                              return SizedBox(
-                                width: constraints.maxWidth,
-                                height: constraints.maxHeight,
-                                child: CameraPreview(controller!),
-                              );
-                            },
-                          )
-                        : Container(),
-                    Positioned(
-                      top: 10,
-                      left: 15,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                          // AdsServices.displayInterstitialAds();
-                        },
-                        child: Container(
-                            alignment: Alignment.centerRight,
-                            width: MediaQuery.of(context).size.width * 0.11,
-                            height: MediaQuery.of(context).size.height * 0.07,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: ColorManager.white.withOpacity(0.3),
-                            ),
-                            child: Center(
-                              child: Icon(
-                                Icons.arrow_back_ios,
-                                color: ColorManager.primary,
-                              ),
-                            )),
-                      ),
-                    ), //Container
-
-                    Center(
-                      child: Positioned(
-                        right: 0,
-                        left: 0,
-                        child:
-                            Lottie.asset('assets/images/circle_scanning.json'),
-                      ),
+        body: Stack(
+          children: <Widget>[
+            _isCameraInitialized
+                ? LayoutBuilder(
+                    builder: (context, constraints) {
+                      return SizedBox(
+                        width: constraints.maxWidth,
+                        height: constraints.maxHeight,
+                        child: CameraPreview(controller!),
+                      );
+                    },
+                  )
+                : Container(),
+            Positioned(
+              top: 10,
+              left: 15,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  // AdsServices.displayInterstitialAds();
+                },
+                child: Container(
+                    alignment: Alignment.centerRight,
+                    width: MediaQuery.of(context).size.width * 0.11,
+                    height: MediaQuery.of(context).size.height * 0.07,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ColorManager.white.withOpacity(0.3),
                     ),
-                    Positioned(
-                      bottom: 130,
-                      left: 0,
-                      right: 0,
-                      child: Center(
-                        child: nameDisplay(ref
-                                        .watch(notifierProvider)
-                                        .liveresult) !=
-                                    "Scanning      " &&
-                                nameDisplay(ref
+                    child: Center(
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: ColorManager.primary,
+                      ),
+                    )),
+              ),
+            ), //Container
+
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.2,
+              right: 0,
+              left: 0,
+              child: Center(
+                  child: Lottie.asset('assets/images/circle_scanning.json')),
+            ),
+            Positioned(
+              bottom: 130,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: nameDisplay(ref.watch(notifierProvider).liveresult) !=
+                            "Scanning      " &&
+                        nameDisplay(ref.watch(notifierProvider).liveresult) !=
+                            "Nothing to Scan"
+                    ? Container(
+                        alignment: Alignment.center,
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        // height: MediaQuery.of(context).size.height * 0.08,
+                        padding: EdgeInsets.symmetric(
+                          vertical: MediaQuery.of(context).size.height * 0.03,
+                          horizontal: MediaQuery.of(context).size.width * 0.05,
+                        ),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.green.withOpacity(0.6)),
+                        child: Text(
+                          nameDisplay(ref.watch(notifierProvider).liveresult),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: ColorManager.white,
+                              fontSize: FontSize.s24,
+                              fontWeight: FontWeightManager.bold),
+                          overflow: TextOverflow.fade,
+                        ),
+                      )
+                    : Container(
+                        alignment: Alignment.center,
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        height: MediaQuery.of(context).size.height * 0.08,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: nameDisplay(ref
                                         .watch(notifierProvider)
                                         .liveresult) !=
                                     "Nothing to Scan"
-                            ? Container(
-                                alignment: Alignment.center,
-                                width: MediaQuery.of(context).size.width * 0.7,
-                                // height: MediaQuery.of(context).size.height * 0.08,
-                                padding: EdgeInsets.symmetric(
-                                  vertical:
-                                      MediaQuery.of(context).size.height * 0.03,
-                                  horizontal:
-                                      MediaQuery.of(context).size.width * 0.05,
-                                ),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Colors.green.withOpacity(0.6)),
-                                child: Text(
+                                ? ColorManager.primary.withOpacity(0.6)
+                                : Colors.yellow.withOpacity(0.8)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Wrap(
+                              children: [
+                                Text(
                                   nameDisplay(
                                       ref.watch(notifierProvider).liveresult),
                                   textAlign: TextAlign.center,
@@ -211,60 +227,24 @@ class _CommunicationState extends ConsumerState<Communication> {
                                       fontWeight: FontWeightManager.bold),
                                   overflow: TextOverflow.fade,
                                 ),
-                              )
-                            : Container(
-                                alignment: Alignment.center,
-                                width: MediaQuery.of(context).size.width * 0.7,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.08,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: nameDisplay(ref
-                                                .watch(notifierProvider)
-                                                .liveresult) !=
-                                            "Nothing to Scan"
-                                        ? ColorManager.primary.withOpacity(0.6)
-                                        : Colors.yellow.withOpacity(0.8)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Wrap(
-                                      children: [
-                                        Text(
-                                          nameDisplay(ref
-                                              .watch(notifierProvider)
-                                              .liveresult),
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              color: ColorManager.white,
-                                              fontSize: FontSize.s24,
-                                              fontWeight:
-                                                  FontWeightManager.bold),
-                                          overflow: TextOverflow.fade,
-                                        ),
-                                      ],
-                                    ),
-                                    nameDisplay(ref
-                                                .watch(notifierProvider)
-                                                .liveresult) !=
-                                            "Nothing to Scan"
-                                        ? LoadingAnimationWidget
-                                            .staggeredDotsWave(
-                                            color: Colors.white,
-                                            size: FontSize.s24,
-                                          )
-                                        : SizedBox(),
-                                  ],
-                                ),
-                              ),
+                              ],
+                            ),
+                            nameDisplay(ref
+                                        .watch(notifierProvider)
+                                        .liveresult) !=
+                                    "Nothing to Scan"
+                                ? LoadingAnimationWidget.staggeredDotsWave(
+                                    color: Colors.white,
+                                    size: FontSize.s24,
+                                  )
+                                : SizedBox(),
+                          ],
+                        ),
                       ),
-                    ), //Container
-                    //Container
-                  ], //<Widget>[]
-                ),
               ),
-            ],
-          ),
+            ), //Container
+            //Container
+          ], //<Widget>[]
         ),
       ),
     );

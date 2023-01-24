@@ -94,8 +94,8 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return WillPopScope(
-     onWillPop: () async {
-      //  AdsServices.displayInterstitialAds();
+      onWillPop: () async {
+        //  AdsServices.displayInterstitialAds();
         return false;
       },
       child: Scaffold(
@@ -243,13 +243,13 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                                   ],
                                 ),
                               )),
-                          Center(
-                            child: Positioned(
-                              right: 0,
-                              left: 0,
-                              child: Lottie.asset(
-                                  'assets/images/circle_scanning.json'),
-                            ),
+                          Positioned(
+                            top: MediaQuery.of(context).size.height * 0.2,
+                            right: 0,
+                            left: 0,
+                            child: Center(
+                                child: Lottie.asset(
+                                    'assets/images/circle_scanning.json')),
                           ),
                           //Container
                           //Container
