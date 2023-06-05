@@ -4,6 +4,6 @@ Developed an app "Dog Breed Detection"
 ● Used Riverpod for state management 💥
 ● User can identify dog breed either using images or live camera preview 🐕‍🦺
 Github : If u like it must leave a star 🌟😅
- https://github.com/SyedMuhammadRehan/Dog-breed-detection
+https://github.com/AliahmadRaza401/Dog-Breed-Detection-Ai
 
 #github #python #riverpod #flutter #flutterdev #flutterdeveloper #fluttercommunity #flutterapp #deeplearning
